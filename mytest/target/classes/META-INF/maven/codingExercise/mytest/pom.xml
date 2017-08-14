@@ -1,0 +1,31 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>codingExercise</groupId>
+  <artifactId>mytest</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+  <name>Maven Quick Start Archetype</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+  	<dependency>
+  		<groupId>com.treasuredata.client</groupId>
+ 		<artifactId>td-client</artifactId>
+ 		<version>0.7.41</version> 	
+  	</dependency>
+	<dependency>
+   	 	<groupId>org.msgpack</groupId>
+    	<artifactId>msgpack-core</artifactId>
+  		<version>0.8.13</version>
+	</dependency>
+	<dependency>
+    <groupId>org.msgpack</groupId>
+    <artifactId>msgpack</artifactId>
+    <version>0.6.12</version>
+</dependency>
+<dependency>
+    <groupId>com.massisframework</groupId>
+    <artifactId>j-text-utils</artifactId>
+    <version>0.3.4</version>
+</dependency>
+  </dependencies>
+</project>
