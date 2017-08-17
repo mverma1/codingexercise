@@ -5,18 +5,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Paths;
-
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 
 import com.google.common.base.Function;
 import com.google.common.base.Throwables;
 import com.google.common.io.CharStreams;
-import com.google.common.io.Files;
 import com.treasuredata.client.ExponentialBackOff;
 import com.treasuredata.client.TDClient;
 import com.treasuredata.client.model.TDJobRequest;
@@ -33,7 +25,7 @@ public class MyCodingTest {
 	private static String outputformat;
 	private static int resultlimit;
 	private static String csvfileLocation = "C:/Users/Public/result.csv";
-	private static String textfileLocation = "C:/Users/Public/result.html";
+	private static String textfileLocation = "C:/Users/Public/result.txt";
 
 	protected MyCodingTest() {
 
@@ -670,7 +662,7 @@ public class MyCodingTest {
 				job = td.jobStatus(jobId);
 			}
 			// Download the result
-			td.jobResult(jobId, TDResultFormat.JSON, new Function<InputStream, String>() {
+			td.jobResult(jobId, TDResultFormat.TSV, new Function<InputStream, String>() {
 				public String apply(InputStream input) {
 					try {
 						String result = CharStreams.toString(new InputStreamReader(input));
@@ -680,23 +672,16 @@ public class MyCodingTest {
 						if (result.isEmpty()) {
 							System.out.println("Error Message: Empty Result");
 						}
-						ScriptEngineManager mgr = new ScriptEngineManager();
-						  ScriptEngine jsEngine = mgr.getEngineByName("JavaScript");
-					    try {
-					    	jsEngine.eval("/mytest/src/main/java/mytest/script.js");
-					    	 result = (String) jsEngine.get("result");
-						} catch (ScriptException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} 
-					    System.out.println("Result returned by Javascript is: " + result);
+						TabularResult tr = new TabularResult();
 						builder.append(result);
 						pw.write(builder.toString());
 						pw.close();
+						tr.print(textfileLocation);
 						return result;
 					} catch (IOException e) {
 						throw Throwables.propagate(e);
 					}
+
 				}
 			});
 		} catch (Exception e) {
